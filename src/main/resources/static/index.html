@@ -1,42 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://unpkg.com/ag-grid/dist/ag-grid.min.noStyle.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+    <link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+    <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
 </head>
 <body>
-<h1>Hello from ag-grid!</h1>
+<h1>srbijaa</h1>
+<div class="container"ng-app="myApp" ng-controller="customersCtrl">
+    <table class="table table-dark">
+        <tr>
+            <td>index</td>
+            <th ng-click="orderByMe('sifBanke')">sifBanke</th>
+            <th ng-click="orderByMe('naziv')">naziv</th>
+            <th ng-click="orderByMe('tekuciRacun')">tekuciRacun</th>
+        </tr>
+        <tr>
+            <td><input type="text" ng-model="filterMin"><input type="text" ng-model="filterMax"></td>
+            <th><input type="text" ng-model="filterSifBanke"></th>
+            <th><input type="text" ng-model="filterNaziv"></th>
+            <th><input type="text" ng-model="filterTekuciRacun"></th>
+        </tr>
+        <tr ng-repeat="(i,x) in names  | orderBy:myOrderBy | filter : {sifBanke:filterSifBanke} | filter : {naziv:filterNaziv} | filter : {tekuciRacun:filterTekuciRacun}">
+            <td>{{i}}</td>
+            <td>{{ x.sifBanke }}</td>
+            <td>{{ x.naziv }}</td>
+            <td>{{ x.tekuciRacun }}</td>
+        </tr>
+    </table>
 
-<div id="myGrid" style="height: 600px;width:500px;" class="ag-theme-balham"></div>
-
+</div>
 <script type="text/javascript" charset="utf-8">
-    // specify the columns
-    var columnDefs = [
-        {headerName: "Make", field: "make"},
-        {headerName: "Model", field: "model"},
-        {headerName: "Price", field: "price"}
-    ];
+    var app = angular.module('myApp', []);
+    app.controller('customersCtrl', function($scope, $http) {
+        $scope.byRange = function (fieldName, minValue, maxValue) {
+            if (minValue === undefined) minValue = Number.MIN_VALUE;
+            if (maxValue === undefined) maxValue = Number.MAX_VALUE;
 
-    // specify the data
-    var rowData = [
-        {make: "Toyota", model: "Celica", price: 35000},
-        {make: "Ford", model: "Mondeo", price: 32000},
-        {make: "Porsche", model: "Boxter", price: 72000}
-    ];
-
-    // let the grid know which columns and what data to use
-    var gridOptions = {
-        columnDefs: columnDefs,
-        rowData: rowData
-    };
-
-    // lookup the container we want the Grid to use
-    var eGridDiv = document.querySelector('#myGrid');
-
-    // create the grid passing in the div to use together with the columns & data we want to use
-    new agGrid.Grid(eGridDiv, gridOptions);
-
+            return function predicateFunc(item) {
+                return minValue <= item[fieldName] && item[fieldName] <= maxValue;
+            };
+        };
+        $scope.orderByMe = function(x) {
+            $scope.myOrderBy = x;
+        }
+        $http.get("getBanks")
+            .then(function (response) {
+                $scope.names = response.data;
+                console.log($scope.names)
+            });
+    });
 </script>
 </body>
 </html>
