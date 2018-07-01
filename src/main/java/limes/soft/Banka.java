@@ -10,6 +10,18 @@ public class Banka {
     String naziv;
     String tekuciRacun;
 
+    int nekiBroj;
+
+    public Banka(){}
+
+
+    public Banka(String sifBanke, String naziv, String tekuciRacun, int nekiBroj) {
+        this.sifBanke = sifBanke;
+        this.naziv = naziv;
+        this.tekuciRacun = tekuciRacun;
+        this.nekiBroj = nekiBroj;
+    }
+
     public String getSifBanke() {
         return sifBanke;
     }
@@ -32,6 +44,14 @@ public class Banka {
 
     public void setTekuciRacun(String tekuciRacun) {
         this.tekuciRacun = tekuciRacun;
+    }
+
+    public int getNekiBroj() {
+        return nekiBroj;
+    }
+
+    public void setNekiBroj(int nekiBroj) {
+        this.nekiBroj = nekiBroj;
     }
 }
 

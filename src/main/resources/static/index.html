@@ -10,27 +10,39 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-    <link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
-    <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
 </head>
 <body>
-<h1>srbijaa</h1>
 <div class="container"ng-app="myApp" ng-controller="customersCtrl">
-    <table class="table table-dark">
+    <h1>Banke</h1>
+
+    <table class="table table-striped table-bordered table-condensed">
+        <thead>
         <tr>
-            <td>index</td>
+            <th>range primer</th>
             <th ng-click="orderByMe('sifBanke')">sifBanke</th>
             <th ng-click="orderByMe('naziv')">naziv</th>
             <th ng-click="orderByMe('tekuciRacun')">tekuciRacun</th>
+
         </tr>
         <tr>
-            <td><input type="text" ng-model="filterMin"><input type="text" ng-model="filterMax"></td>
-            <th><input type="text" ng-model="filterSifBanke"></th>
-            <th><input type="text" ng-model="filterNaziv"></th>
-            <th><input type="text" ng-model="filterTekuciRacun"></th>
+            <td>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <input type="number" ng-model="filterMin" class="form-control">
+                    </div>
+                    <div class="col-xs-3">
+                        <input type="text" ng-model="filterMax" class="form-control">
+                    </div>
+                </div>
+            </td>
+            <th><input type="text" ng-model="filterSifBanke" class="form-control"></th>
+            <th><input type="text" ng-model="filterNaziv" class="form-control"></th>
+            <th><input type="text" ng-model="filterTekuciRacun" class="form-control"></th>
         </tr>
-        <tr ng-repeat="(i,x) in names  | orderBy:myOrderBy | filter : {sifBanke:filterSifBanke} | filter : {naziv:filterNaziv} | filter : {tekuciRacun:filterTekuciRacun}">
-            <td>{{i}}</td>
+        </thead>
+
+        <tr ng-repeat="x in names  | orderBy:myOrderBy | filter : {sifBanke:filterSifBanke} | filter : {naziv:filterNaziv} | filter : {tekuciRacun:filterTekuciRacun}| filter:byRange('nekiBroj', filterMin, filterMax)">
+            <td>{{x.nekiBroj}}</td>
             <td>{{ x.sifBanke }}</td>
             <td>{{ x.naziv }}</td>
             <td>{{ x.tekuciRacun }}</td>
@@ -41,6 +53,9 @@
 <script type="text/javascript" charset="utf-8">
     var app = angular.module('myApp', []);
     app.controller('customersCtrl', function($scope, $http) {
+        $scope.filterMin = -1;
+        $scope.filterMax = 10000;
+
         $scope.byRange = function (fieldName, minValue, maxValue) {
             if (minValue === undefined) minValue = Number.MIN_VALUE;
             if (maxValue === undefined) maxValue = Number.MAX_VALUE;
@@ -52,7 +67,7 @@
         $scope.orderByMe = function(x) {
             $scope.myOrderBy = x;
         }
-        $http.get("getBanks")
+        $http.get("banks")
             .then(function (response) {
                 $scope.names = response.data;
                 console.log($scope.names)
