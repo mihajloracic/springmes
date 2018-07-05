@@ -18,22 +18,11 @@
     <table class="table table-striped table-bordered table-condensed">
         <thead>
         <tr>
-            <td><a href="#" ng-click="orderByMe('nekiBroj')">neki broj</a> <span ng-show="myOrderBy == 'nekiBroj'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
             <td><a href="#" ng-click="orderByMe('sifBanke')">sifBanke</a> <span ng-show="myOrderBy == 'sifBanke'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
             <td><a href="#" ng-click="orderByMe('naziv')">naziv</a>  <span ng-show="myOrderBy == 'naziv'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
             <td><a href="#" ng-click="orderByMe('tekuciRacun')">tekuciRacun</a>  <span ng-show="myOrderBy == 'tekuciRacun'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
         </tr>
         <tr>
-            <td>
-                <div class="row">
-                    <div class="col-xs-3">
-                        <input type="number" ng-model="filterMin" class="form-control">
-                    </div>
-                    <div class="col-xs-3">
-                        <input type="text" ng-model="filterMax" class="form-control">
-                    </div>
-                </div>
-            </td>
             <th><input type="text" ng-model="filterSifBanke" class="form-control"></th>
             <th><input type="text" ng-model="filterNaziv" class="form-control"></th>
             <th><input type="text" ng-model="filterTekuciRacun" class="form-control"></th>
@@ -41,10 +30,12 @@
         </thead>
 
         <tr ng-repeat="x in names  | orderBy:myOrderBy:ascending | filter : {sifBanke:filterSifBanke} | filter : {naziv:filterNaziv} | filter : {tekuciRacun:filterTekuciRacun}| filter:byRange('nekiBroj', filterMin, filterMax)">
-            <td>{{x.nekiBroj}}</td>
-            <td>{{ x.sifBanke }}</td>
-            <td>{{ x.naziv }}</td>
-            <td>{{ x.tekuciRacun }}</td>
+            <td>{{ x.RbrStavke }}</td>
+            <td>{{ x.RbrNaloga }}</td>
+            <td>{{ x.Konto }}</td>
+            <td>{{ x.SifKomint }}</td>
+            <td>{{ x.Duguje }}</td>
+            <td>{{ x.Potrazuje }}</td>
         </tr>
     </table>
 
@@ -54,7 +45,7 @@
     app.controller('customersCtrl', function($scope, $http) {
         $scope.filterMin = -1;
         $scope.filterMax = 10000;
-        $scope.myOrderBy = 'nekiBroj';
+        $scope.myOrderBy = 'sifBanke';
         $scope.ascending = true;
         $scope.byRange = function (fieldName, minValue, maxValue) {
             if (minValue === undefined) minValue = Number.MIN_VALUE;
@@ -68,7 +59,7 @@
             $scope.myOrderBy = x;
             $scope.ascending = !$scope.ascending;
         }
-        $http.get("banks")
+        $http.get("pregledtroskova")
             .then(function (response) {
                 $scope.names = response.data;
                 console.log($scope.names)

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+</head>
+<body>
+<div class="container"ng-app="myApp" ng-controller="customersCtrl">
+    <h1>Banke</h1>
+    <div>
+        <form>
+            <div class="form-group">
+                <label for="startDate">Pocetni datum</label>
+                <input id="startDate" type="date"  data-date-format='yy-mm-dd' class="form-control" ng-model="startDate">
+            </div>
+            <div class="form-group">
+                <label for="endDate">Krajnji datum</label>
+                <input id="endDate" type="date"  data-date-format='yy-mm-dd' type="date" class="form-control" ng-model="endDate">
+            </div>
+            <div class="form-group">
+                <button data-date-format="yyyy-mm-dd" type="submit" class="btn btn-default" ng-click="fetchData(startDate,endDate)">Pretraga</button>
+            </div>
+        </form>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <td><a href="#" ng-click="orderByMe('RbrStavke')">RbrStavke</a> <span ng-show="myOrderBy == 'RbrStavke'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('RbrNaloga')">RbrNaloga</a>  <span ng-show="myOrderBy == 'RbrNaloga'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('Konto')">Konto</a>  <span ng-show="myOrderBy == 'Konto'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('SifKomint')">SifKomint</a> <span ng-show="myOrderBy == 'SifKomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('Duguje')">Duguje</a>  <span ng-show="myOrderBy == 'Duguje'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('Potrazuje')">Potrazuje</a>  <span ng-show="myOrderBy == 'Potrazuje'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+
+        </tr>
+        <tr>
+            <th><input type="text" ng-model="filterRbrStavke" class="form-control"></th>
+            <th><input type="text" ng-model="filterRbrNaloga" class="form-control"></th>
+            <th><input type="text" ng-model="filterKonto" class="form-control"></th>
+            <th><input type="text" ng-model="filterSifKomint" class="form-control"></th>
+            <th>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <input type="number" ng-model="filterMin" class="form-control">
+                    </div>
+                    <div class="col-xs-3">
+                        <input type="number" ng-model="filterMax" class="form-control">
+                    </div>
+                </div>
+            </th>
+            <th><input type="text" ng-model="filterPotrazuje" class="form-control"></th>
+        </tr>
+        </thead>
+
+        <tr ng-repeat="x in names  | orderBy:myOrderBy:ascending | filter : {RbrStavke:filterRbrStavke} | filter : {RbrNaloga:filterRbrNaloga} | filter : {Konto:filterKonto}| filter : {SifKomint:filterSifKomint} | filter:byRange('Duguje', filterMin, filterMax)| filter : {Potrazuje:filterPotrazuje}">
+            <td>{{ x.RbrStavke }}</td>
+            <td>{{ x.RbrNaloga }}</td>
+            <td>{{ x.Konto }}</td>
+            <td>{{ x.SifKomint }}</td>
+            <td>{{ x.Duguje }}</td>
+            <td>{{ x.Potrazuje }}</td>
+        </tr>
+    </table>
+
+</div>
+<script type="text/javascript" charset="utf-8">
+    var app = angular.module('myApp', []);
+    app.controller('customersCtrl', function($scope, $http) {
+        $scope.byRange = function (fieldName, minValue, maxValue) {
+            if (minValue === undefined || minValue === null) minValue = Number.MIN_VALUE;
+            if (maxValue === undefined || maxValue === null) maxValue = Number.MAX_VALUE;
+
+            return function predicateFunc(item) {
+                return minValue <= item[fieldName] && item[fieldName] <= maxValue;
+            };
+        };
+        $scope.orderByMe = function(x) {
+            $scope.myOrderBy = x;
+            $scope.ascending = !$scope.ascending;
+        }
+
+        $scope.fetchData = function(startDate,endDate){
+            console.log(getDateFormat(startDate),getDateFormat(endDate));
+            $http.get("fa?startDate="+getDateFormat(startDate)+"&endDate="+getDateFormat(endDate)).then(function (response) {
+                console.log(response.data)
+                $scope.names = response.data;
+                console.log($scope.names)
+            });
+        }
+        getDateFormat = function(date){
+            return date.getFullYear()+'.'+date.getMonth()+'.'+date.getDate()
+        }
+
+    });
+</script>
+</body>
+</html>

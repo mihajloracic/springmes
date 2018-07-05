@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+</head>
+<body ng-app="myApp">
+<div class="container"  ng-controller="customersCtrl">
+    <h1>Pregled kupaca i dobavljaca</h1>
+
+    <button type="button" ng-class="{'btn btn-primary': filterMiDugujemo, 'btn btn-secondary' : !filterMiDugujemo}" ng-click="customFilterSaldoMiDugujemo()">Mi dugujemo</button>
+    <button type="button" ng-class="{'btn btn-primary': filterMiPotrazujemo, 'btn btn-secondary' : !filterMiPotrazujemo}" ng-click="customFilterSaldoMiPotrazujemo()">Mi potrazujemo</button>
+    <button type="button" ng-class="{'btn btn-primary': filterRemoveZero, 'btn btn-secondary' : !filterRemoveZero}" ng-click="customFilterSaldoIzbaciNule()">Izbaci nule</button>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr><td><a href="#" ng-click="orderByMe('Nazivkomint')">Nazivkomint</a> <span ng-show="myOrderBy == 'Nazivkomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('Mesto')">Mesto</a> <span ng-show="myOrderBy == 'Mesto'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('SifKomint')">SifKomint</a> <span ng-show="myOrderBy == 'SifKomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('SaldoKupac')">SaldoKupac</a> <span ng-show="myOrderBy == 'SaldoKupac'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('k432xx')">k432xx</a> <span ng-show="myOrderBy == 'k432xx'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('k14000')">k14000</a> <span ng-show="myOrderBy == 'k14000'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('SaldoDobavljac')">SaldoDobavljac</a> <span ng-show="myOrderBy == 'SaldoDobavljac'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('Saldo')">Saldo</a> <span ng-show="myOrderBy == 'Saldo'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('Kupac')">Kupac</a> <span ng-show="myOrderBy == 'Kupac'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('KupAv')">KupAv</a> <span ng-show="myOrderBy == 'KupAv'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('Dobavljac')">Dobavljac</a> <span ng-show="myOrderBy == 'Dobavljac'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('DobAv')">DobAv</a> <span ng-show="myOrderBy == 'DobAv'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('StatusKom')">StatusKom</a> <span ng-show="myOrderBy == 'StatusKom'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('Poslovnica')">Poslovnica</a> <span ng-show="myOrderBy == 'Poslovnica'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('Referent')">Referent</a> <span ng-show="myOrderBy == 'Referent'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('Ime')">Ime</a> <span ng-show="myOrderBy == 'Ime'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('ReferentDob')">ReferentDob</a> <span ng-show="myOrderBy == 'ReferentDob'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            <td><a href="#" ng-click="orderByMe('ReferentDobavljaca')">ReferentDobavljaca</a> <span ng-show="myOrderBy == 'ReferentDobavljaca'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+        </tr><tr><th><input type="text" ng-model="filterNazivkomint" class="form-control"></th>
+            <th><input type="text" ng-model="filterMesto" class="form-control"></th>
+            <th><input type="text" ng-model="filterSifKomint" class="form-control"></th>
+            <th><input type="text" ng-model="filterSaldoKupac" class="form-control"></th>
+            <th><input type="text" ng-model="filterk432xx" class="form-control"></th>
+            <th><input type="text" ng-model="filterk14000" class="form-control"></th>
+            <th><input type="text" ng-model="filterSaldoDobavljac" class="form-control"></th>
+            <th><input type="text" ng-model="filterSaldo" class="form-control"></th>
+            <th><input type="text" ng-model="filterKupac" class="form-control"></th>
+            <th><input type="text" ng-model="filterKupAv" class="form-control"></th>
+            <th><input type="text" ng-model="filterDobavljac" class="form-control"></th>
+            <th><input type="text" ng-model="filterDobAv" class="form-control"></th>
+            <th><input type="text" ng-model="filterStatusKom" class="form-control"></th>
+            <th><input type="text" ng-model="filterPoslovnica" class="form-control"></th>
+            <th><input type="text" ng-model="filterReferent" class="form-control"></th>
+            <th><input type="text" ng-model="filterIme" class="form-control"></th>
+            <th><input type="text" ng-model="filterReferentDob" class="form-control"></th>
+            <th><input type="text" ng-model="filterReferentDobavljaca" class="form-control"></th>
+        </tr></thead><tbody><tr ng-repeat="x in names  | orderBy:myOrderBy:ascending | filter : {Nazivkomint:filterNazivkomint}| filter : {Mesto:filterMesto}| filter : {SifKomint:filterSifKomint}| filter : {SaldoKupac:filterSaldoKupac}| filter : {k432xx:filterk432xx}| filter : {k14000:filterk14000}| filter : {SaldoDobavljac:filterSaldoDobavljac}| filter : {Saldo:filterSaldo}| filter : {Kupac:filterKupac}| filter : {KupAv:filterKupAv}| filter : {Dobavljac:filterDobavljac}| filter : {DobAv:filterDobAv}| filter : {StatusKom:filterStatusKom}| filter : {Poslovnica:filterPoslovnica}| filter : {Referent:filterReferent}| filter : {Ime:filterIme}
+        | filter : {ReferentDob:filterReferentDob}|
+         filter : {ReferentDobavljaca:filterReferentDobavljaca}
+         | filter: lessThan('Saldo', 0,filterMiDugujemo)| filter: greaterThan('Saldo', 0,filterMiPotrazujemo)| filter: removeZero('Saldo',filterRemoveZero)"><td>{{ x.Nazivkomint }}</td>
+        <td>{{ x.Mesto }}</td>
+        <td>{{ x.SifKomint }}</td>
+        <td>{{ x.SaldoKupac }}</td>
+        <td>{{ x.k432xx }}</td>
+        <td>{{ x.k14000 }}</td>
+        <td>{{ x.SaldoDobavljac }}</td>
+        <td>{{ x.Saldo }}</td>
+        <td>{{ x.Kupac }}</td>
+        <td>{{ x.KupAv }}</td>
+        <td>{{ x.Dobavljac }}</td>
+        <td>{{ x.DobAv }}</td>
+        <td>{{ x.StatusKom }}</td>
+        <td>{{ x.Poslovnica }}</td>
+        <td>{{ x.Referent }}</td>
+        <td>{{ x.Ime }}</td>
+        <td>{{ x.ReferentDob }}</td>
+        <td>{{ x.ReferentDobavljaca }}</td>
+    </tr>
+    </tbody>
+    </table>
+
+</div>
+<script type="text/javascript" charset="utf-8">
+    var app = angular.module('myApp', []);
+    app.controller('customersCtrl', function($scope, $http) {
+        $scope.filterMiDugujemo = false;
+        $scope.filterMiPotrazujemo = false;
+        $scope.filterRemoveZero = false;
+        $scope.byRange = function (fieldName, minValue, maxValue) {
+            if (minValue === undefined || minValue === null) minValue = Number.MIN_VALUE;
+            if (maxValue === undefined || maxValue === null) maxValue = Number.MAX_VALUE;
+
+            return function predicateFunc(item) {
+                return minValue <= item[fieldName] && item[fieldName] <= maxValue;
+            };
+        };
+        $scope.greaterThan = function(prop, val,active){
+            if(!active){
+                return function(item){
+                    return true;
+                }
+            }
+            return function(item){
+                return item[prop] >= val;
+            }
+        }
+        $scope.lessThan = function(prop, val,active){
+            if(!active){
+                return function(item){
+                    return true;
+                }
+            }
+            return function(item){
+                return item[prop] <= val;
+            }
+        }
+        $scope.removeZero = function(prop,active){
+            if(!active){
+                return function(item){
+                    return true;
+                }
+            }
+            return function(item){
+                return item[prop] != 0;
+            }
+        }
+        $scope.orderByMe = function(x) {
+            $scope.myOrderBy = x;
+            $scope.ascending = !$scope.ascending;
+        }
+        $scope.customFilterSaldoMiDugujemo = function(){
+            $scope.filterMiDugujemo = !$scope.filterMiDugujemo
+            $scope.filterMiPotrazujemo = false;
+        }
+
+        $scope.customFilterSaldoMiPotrazujemo = function(){
+            $scope.filterMiPotrazujemo = !$scope.filterMiPotrazujemo
+            $scope.filterMiDugujemo = false;
+        }
+        $scope.customFilterSaldoIzbaciNule = function(){
+            $scope.filterRemoveZero = !$scope.filterRemoveZero;
+        }
+        $http.get("kupcidobavljaci").then(function (response) {
+            $scope.names = response.data;
+            console.log($scope.names)
+        })
+        getDateFormat = function(date){
+            return date.getFullYear()+'.'+date.getMonth()+'.'+date.getDate()
+        }
+
+    });
+</script>
+</body>
+</html>
