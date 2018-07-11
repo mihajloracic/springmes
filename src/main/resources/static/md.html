@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="js/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Latest compiled JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.js"></script>
+</head>
+<body ng-app="myApp">
+<div ng-include="'fragments/navbar.htm'"></div>
+<div class="container"  ng-controller="customeCtrl">
+    <div class="upper">
+        <h1>Master detail izvestaj</h1>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr><td><a href="#" ng-click="orderByMe('BrUgovora')">BrUgovora</a> <span ng-show="myOrderBy == 'BrUgovora'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('SifKomint')">SifKomint</a> <span ng-show="myOrderBy == 'SifKomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('NazivKomint')">NazivKomint</a> <span ng-show="myOrderBy == 'NazivKomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('Mesto')">Mesto</a> <span ng-show="myOrderBy == 'Mesto'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('Datum')">Datum</a> <span ng-show="myOrderBy == 'Datum'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('DatumRok')">DatumRok</a> <span ng-show="myOrderBy == 'DatumRok'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('RokUgovora')">RokUgovora</a> <span ng-show="myOrderBy == 'RokUgovora'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('Status')">Status</a> <span ng-show="myOrderBy == 'Status'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('TipDokumenta')">TipDokumenta</a> <span ng-show="myOrderBy == 'TipDokumenta'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('RbrTendera')">RbrTendera</a> <span ng-show="myOrderBy == 'RbrTendera'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('VrstaObezbedjenja')">VrstaObezbedjenja</a> <span ng-show="myOrderBy == 'VrstaObezbedjenja'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('RokValjanosti')">RokValjanosti</a> <span ng-show="myOrderBy == 'RokValjanosti'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('VrednostObezbedjenja')">VrednostObezbedjenja</a> <span ng-show="myOrderBy == 'VrednostObezbedjenja'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('Valuta')">Valuta</a> <span ng-show="myOrderBy == 'Valuta'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            </tr><tr><th><input type="text" ng-model="filterBrUgovora" class="form-control"></th>
+                <th><input type="text" ng-model="filterSifKomint" class="form-control"></th>
+                <th><input type="text" ng-model="filterNazivKomint" class="form-control"></th>
+                <th><input type="text" ng-model="filterMesto" class="form-control"></th>
+                <th><input type="text" ng-model="filterDatum" class="form-control"></th>
+                <th><input type="text" ng-model="filterDatumRok" class="form-control"></th>
+                <th><input type="text" ng-model="filterRokUgovora" class="form-control"></th>
+                <th><input type="text" ng-model="filterStatus" class="form-control"></th>
+                <th><input type="text" ng-model="filterTipDokumenta" class="form-control"></th>
+                <th><input type="text" ng-model="filterRbrTendera" class="form-control"></th>
+                <th><input type="text" ng-model="filterVrstaObezbedjenja" class="form-control"></th>
+                <th><input type="text" ng-model="filterRokValjanosti" class="form-control"></th>
+                <th><input type="text" ng-model="filterVrednostObezbedjenja" class="form-control"></th>
+                <th><input type="text" ng-model="filterValuta" class="form-control"></th>
+            </tr></thead><tbody><tr class="clickable" ng-repeat="x in names  | orderBy:myOrderBy:ascending | filter : {BrUgovora:filterBrUgovora}| filter : {SifKomint:filterSifKomint}| filter : {NazivKomint:filterNazivKomint}| filter : {Mesto:filterMesto}| filter : {Datum:filterDatum}| filter : {DatumRok:filterDatumRok}| filter : {RokUgovora:filterRokUgovora}| filter : {Status:filterStatus}| filter : {TipDokumenta:filterTipDokumenta}| filter : {RbrTendera:filterRbrTendera}| filter : {VrstaObezbedjenja:filterVrstaObezbedjenja}| filter : {RokValjanosti:filterRokValjanosti}| filter : {VrednostObezbedjenja:filterVrednostObezbedjenja}|
+        filter : {Valuta:filterValuta}"ng-click="callMasterDetail(x)">
+            <td>{{ x.BrUgovora }}</td>
+            <td>{{ x.SifKomint }}</td>
+            <td>{{ x.NazivKomint }}</td>
+            <td>{{ x.Mesto }}</td>
+            <td>{{ x.Datum }}</td>
+            <td>{{ x.DatumRok }}</td>
+            <td>{{ x.RokUgovora }}</td>
+            <td>{{ x.Status }}</td>
+            <td>{{ x.TipDokumenta }}</td>
+            <td>{{ x.RbrTendera }}</td>
+            <td>{{ x.VrstaObezbedjenja }}</td>
+            <td>{{ x.RokValjanosti }}</td>
+            <td>{{ x.VrednostObezbedjenja }}</td>
+            <td>{{ x.Valuta }}</td>
+        </tr></tbody></table></div>
+    <div class="lower">
+        <h1>Details</h1>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr><td><a href="#" ng-click="orderByMe('godina')">godina</a> <span ng-show="myOrderBy == 'godina'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('BrUgovora')">BrUgovora</a> <span ng-show="myOrderBy == 'BrUgovora'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('VR')">VR</a> <span ng-show="myOrderBy == 'VR'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('Rbr')">Rbr</a> <span ng-show="myOrderBy == 'Rbr'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('Datum')">Datum</a> <span ng-show="myOrderBy == 'Datum'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('Valuta')">Valuta</a> <span ng-show="myOrderBy == 'Valuta'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('IznosRobe')">IznosRobe</a> <span ng-show="myOrderBy == 'IznosRobe'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('IznosPoreza')">IznosPoreza</a> <span ng-show="myOrderBy == 'IznosPoreza'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('IznosRabata')">IznosRabata</a> <span ng-show="myOrderBy == 'IznosRabata'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('IznosKupac')">IznosKupac</a> <span ng-show="myOrderBy == 'IznosKupac'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('IznosAvansa')">IznosAvansa</a> <span ng-show="myOrderBy == 'IznosAvansa'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+                <td><a href="#" ng-click="orderByMe('RbrTendera')">RbrTendera</a> <span ng-show="myOrderBy == 'RbrTendera'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+            </tr><tr><th><input type="text" ng-model="filtergodina" class="form-control"></th>
+                <th><input type="text" ng-model="filterBrUgovora" class="form-control"></th>
+                <th><input type="text" ng-model="filterVR" class="form-control"></th>
+                <th><input type="text" ng-model="filterRbr" class="form-control"></th>
+                <th><input type="text" ng-model="filterDatum" class="form-control"></th>
+                <th><input type="text" ng-model="filterValuta" class="form-control"></th>
+                <th><input type="text" ng-model="filterIznosRobe" class="form-control"></th>
+                <th><input type="text" ng-model="filterIznosPoreza" class="form-control"></th>
+                <th><input type="text" ng-model="filterIznosRabata" class="form-control"></th>
+                <th><input type="text" ng-model="filterIznosKupac" class="form-control"></th>
+                <th><input type="text" ng-model="filterIznosAvansa" class="form-control"></th>
+                <th><input type="text" ng-model="filterRbrTendera" class="form-control"></th>
+            </tr></thead>
+            <tbody>
+            <tr><h1>nema detalja</h1></tr>
+            <tr ng-repeat="x in detailData  | orderBy:myOrderBy:ascending | filter : {godina:filtergodina}| filter : {BrUgovora:filterBrUgovora}| filter : {VR:filterVR}| filter : {Rbr:filterRbr}| filter : {Datum:filterDatum}| filter : {Valuta:filterValuta}| filter : {IznosRobe:filterIznosRobe}| filter : {IznosPoreza:filterIznosPoreza}| filter : {IznosRabata:filterIznosRabata}| filter : {IznosKupac:filterIznosKupac}| filter : {IznosAvansa:filterIznosAvansa}| filter : {RbrTendera:filterRbrTendera}"><td>{{ x.godina }}</td>
+                <td>{{ x.BrUgovora }}</td>
+                <td>{{ x.VR }}</td>
+                <td>{{ x.Rbr }}</td>
+                <td>{{ x.Datum }}</td>
+                <td>{{ x.Valuta }}</td>
+                <td>{{ x.IznosRobe }}</td>
+                <td>{{ x.IznosPoreza }}</td>
+                <td>{{ x.IznosRabata }}</td>
+                <td>{{ x.IznosKupac }}</td>
+                <td>{{ x.IznosAvansa }}</td>
+                <td>{{ x.RbrTendera }}</td>
+            </tr></tbody></table></div>
+</div>
+<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/navbar.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    app.controller('customeCtrl', function($scope, $http, $rootScope) {
+        $http.get("masterdetail").then(function (response) {
+            $scope.names = response.data;
+            console.log($scope.names)
+        })
+        $scope.callMasterDetail = function(x){
+            $http.get('masterdetailGetDetails?Rbr='+x.BrUgovora).then(function (response) {
+                $scope.detailData = response.data
+            })
+        }
+    });
+</script>
+</body>
+<style>
+    .upper, .lower {
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+
+    .upper {
+        top: 35px;
+        height: 45%;
+        overflow:scroll;
+    }
+
+    .lower {
+        bottom: 0;
+        height: 50%;
+        overflow:scroll;
+    }
+    .clickable { cursor: pointer; }
+</style>
+</html>
