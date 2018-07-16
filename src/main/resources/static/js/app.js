@@ -1,4 +1,5 @@
 var app = angular.module('myApp', []);
+
 app.run(function($rootScope) {
     $rootScope.color = 'blue';
     console.log($rootScope.color)
@@ -10,6 +11,7 @@ app.run(function($rootScope) {
             return minValue <= item[fieldName] && item[fieldName] <= maxValue;
         };
     };
+
     $rootScope.greaterThan = function(prop, val,active){
         if(!active){
             return function(item){
@@ -47,4 +49,9 @@ app.run(function($rootScope) {
     $rootScope.getDateFormat = function(date){
         return date.getFullYear()+'.'+date.getMonth()+'.'+date.getDate()
     }
+});
+app.filter('parseDate', function() {
+    return function(input) {
+        return new Date(input);
+    };
 });

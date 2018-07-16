@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="js/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Latest compiled JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.js"></script>
+</head>
+<body ng-app="myApp">
+<div ng-include="'fragments/navbar.htm'"></div>
+<div class="container"  ng-controller="customeCtrl">
+<h1>Master detail izvestaj</h1>
+<table class="table table-striped table-bordered">
+<thead>
+<tr><td><a href="#" ng-click="orderByMe('BrUgovora')">BrUgovora</a> <span ng-show="myOrderBy == 'BrUgovora'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('SifKomint')">SifKomint</a> <span ng-show="myOrderBy == 'SifKomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('NazivKomint')">NazivKomint</a> <span ng-show="myOrderBy == 'NazivKomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('Mesto')">Mesto</a> <span ng-show="myOrderBy == 'Mesto'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('Datum')">Datum</a> <span ng-show="myOrderBy == 'Datum'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('DatumRok')">DatumRok</a> <span ng-show="myOrderBy == 'DatumRok'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+</tr><tr><th><input type="text" ng-model="filterBrUgovora" class="form-control"></th>
+<th><input type="text" ng-model="filterSifKomint" class="form-control"></th>
+<th><input type="text" ng-model="filterNazivKomint" class="form-control"></th>
+<th><input type="text" ng-model="filterMesto" class="form-control"></th>
+<th><input type="text" ng-model="filterDatum" class="form-control"></th>
+<th><input type="text" ng-model="filterDatumRok" class="form-control"></th>
+</tr></thead><tbody><tr ng-repeat="x in names  | orderBy:myOrderBy:ascending | filter : {BrUgovora:filterBrUgovora}| filter : {SifKomint:filterSifKomint}| filter : {NazivKomint:filterNazivKomint}| filter : {Mesto:filterMesto}| filter : {Datum:filterDatum}| filter : {DatumRok:filterDatumRok}"><td>{{ x.BrUgovora }}</td>
+<td>{{ x.SifKomint }}</td>
+<td>{{ x.NazivKomint }}</td>
+<td>{{ x.Mesto }}</td>
+<td>{{ x.Datum }}</td>
+<td>{{ x.DatumRok }}</td>
+</tr></tbody></table></div>
+<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/navbar.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    app.controller('customeCtrl', function($scope, $http, $rootScope) {
+        $http.get("IzvestajTroskovaRequest").then(function (response) {
+            $scope.names = response.data;
+            console.log($scope.names)
+        })
+    });
+</script>
+</body>
+</html>
