@@ -14,46 +14,46 @@
 <body ng-app="myApp">
 <div ng-include="'fragments/navbar.htm'"></div>
 <div class="container"  ng-controller="customeCtrl">
-    <h1>Promet po kupcima</h1>
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr><td><a href="#" ng-click="orderByMe('SifKomint')">SifKomint</a> <span ng-show="myOrderBy == 'SifKomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('Datum')">Datum</a> <span ng-show="myOrderBy == 'Datum'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('sifPlacanja')">sifPlacanja</a> <span ng-show="myOrderBy == 'sifPlacanja'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('IznosFaktura')">IznosFaktura</a> <span ng-show="myOrderBy == 'IznosFaktura'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('Rabat')">Rabat</a> <span ng-show="myOrderBy == 'Rabat'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('IznosRobe')">IznosRobe</a> <span ng-show="myOrderBy == 'IznosRobe'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('Porez')">Porez</a> <span ng-show="myOrderBy == 'Porez'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('NazivKomint')">NazivKomint</a> <span ng-show="myOrderBy == 'NazivKomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('Mesto')">Mesto</a> <span ng-show="myOrderBy == 'Mesto'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('NazivPlacanja')">NazivPlacanja</a> <span ng-show="myOrderBy == 'NazivPlacanja'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('StProsecanRuc')">StProsecanRuc</a> <span ng-show="myOrderBy == 'StProsecanRuc'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-            <td><a href="#" ng-click="orderByMe('ProsecanRuc')">ProsecanRuc</a> <span ng-show="myOrderBy == 'ProsecanRuc'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
-        </tr><tr><th><input type="text" ng-model="filterSifKomint" class="form-control"></th>
-            <th><input type="text" ng-model="filterDatum" class="form-control"></th>
-            <th><input type="text" ng-model="filtersifPlacanja" class="form-control"></th>
-            <th><input type="text" ng-model="filterIznosFaktura" class="form-control"></th>
-            <th><input type="text" ng-model="filterRabat" class="form-control"></th>
-            <th><input type="text" ng-model="filterIznosRobe" class="form-control"></th>
-            <th><input type="text" ng-model="filterPorez" class="form-control"></th>
-            <th><input type="text" ng-model="filterNazivKomint" class="form-control"></th>
-            <th><input type="text" ng-model="filterMesto" class="form-control"></th>
-            <th><input type="text" ng-model="filterNazivPlacanja" class="form-control"></th>
-            <th><input type="text" ng-model="filterStProsecanRuc" class="form-control"></th>
-            <th><input type="text" ng-model="filterProsecanRuc" class="form-control"></th>
-        </tr></thead><tbody><tr ng-repeat="x in names  | orderBy:myOrderBy:ascending | filter : {SifKomint:filterSifKomint}| filter : {Datum:filterDatum}| filter : {sifPlacanja:filtersifPlacanja}| filter : {IznosFaktura:filterIznosFaktura}| filter : {Rabat:filterRabat}| filter : {IznosRobe:filterIznosRobe}| filter : {Porez:filterPorez}| filter : {NazivKomint:filterNazivKomint}| filter : {Mesto:filterMesto}| filter : {NazivPlacanja:filterNazivPlacanja}| filter : {StProsecanRuc:filterStProsecanRuc}| filter : {ProsecanRuc:filterProsecanRuc}"><td>{{ x.SifKomint }}</td>
-        <td>{{ convertDate(x.Datum) | date : "dd-MM-yy "}}</td>
-        <td>{{ x.sifPlacanja }}</td>
-        <td>{{ x.IznosFaktura }}</td>
-        <td>{{ x.Rabat }}</td>
-        <td>{{ x.IznosRobe }}</td>
-        <td>{{ x.Porez }}</td>
-        <td>{{ x.NazivKomint }}</td>
-        <td>{{ x.Mesto }}</td>
-        <td>{{ x.NazivPlacanja }}</td>
-        <td>{{ x.StProsecanRuc }}</td>
-        <td>{{ x.ProsecanRuc }}</td>
-    </tr></tbody></table></div>
+<h1>Promet po kupcima</h1>
+<table class="table table-striped table-bordered">
+<thead>
+<tr><td><a href="#" ng-click="orderByMe('SifKomint')">SifKomint</a> <span ng-show="myOrderBy == 'SifKomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('Datum')">Datum</a> <span ng-show="myOrderBy == 'Datum'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('sifPlacanja')">sifPlacanja</a> <span ng-show="myOrderBy == 'sifPlacanja'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('IznosFaktura')">IznosFaktura</a> <span ng-show="myOrderBy == 'IznosFaktura'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('Rabat')">Rabat</a> <span ng-show="myOrderBy == 'Rabat'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('IznosRobe')">IznosRobe</a> <span ng-show="myOrderBy == 'IznosRobe'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('Porez')">Porez</a> <span ng-show="myOrderBy == 'Porez'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('NazivKomint')">NazivKomint</a> <span ng-show="myOrderBy == 'NazivKomint'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('Mesto')">Mesto</a> <span ng-show="myOrderBy == 'Mesto'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('NazivPlacanja')">NazivPlacanja</a> <span ng-show="myOrderBy == 'NazivPlacanja'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('StProsecanRuc')">StProsecanRuc</a> <span ng-show="myOrderBy == 'StProsecanRuc'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+<td><a href="#" ng-click="orderByMe('ProsecanRuc')">ProsecanRuc</a> <span ng-show="myOrderBy == 'ProsecanRuc'" ng-class="{'fa fa-caret-down': ascending,'fa fa-caret-up': !ascending}"></span></td>
+</tr><tr><th><input type="text" ng-model="filterSifKomint" class="form-control"></th>
+<th><input type="text" ng-model="filterDatum" class="form-control"></th>
+<th><input type="text" ng-model="filtersifPlacanja" class="form-control"></th>
+<th><input type="text" ng-model="filterIznosFaktura" class="form-control"></th>
+<th><input type="text" ng-model="filterRabat" class="form-control"></th>
+<th><input type="text" ng-model="filterIznosRobe" class="form-control"></th>
+<th><input type="text" ng-model="filterPorez" class="form-control"></th>
+<th><input type="text" ng-model="filterNazivKomint" class="form-control"></th>
+<th><input type="text" ng-model="filterMesto" class="form-control"></th>
+<th><input type="text" ng-model="filterNazivPlacanja" class="form-control"></th>
+<th><input type="text" ng-model="filterStProsecanRuc" class="form-control"></th>
+<th><input type="text" ng-model="filterProsecanRuc" class="form-control"></th>
+</tr></thead><tbody><tr ng-repeat="x in names  | orderBy:myOrderBy:ascending | filter : {SifKomint:filterSifKomint}| filter : {Datum:filterDatum}| filter : {sifPlacanja:filtersifPlacanja}| filter : {IznosFaktura:filterIznosFaktura}| filter : {Rabat:filterRabat}| filter : {IznosRobe:filterIznosRobe}| filter : {Porez:filterPorez}| filter : {NazivKomint:filterNazivKomint}| filter : {Mesto:filterMesto}| filter : {NazivPlacanja:filterNazivPlacanja}| filter : {StProsecanRuc:filterStProsecanRuc}| filter : {ProsecanRuc:filterProsecanRuc}"><td>{{ x.SifKomint }}</td>
+<td>{{ convertDate(x.Datum) | date : "dd-MM-yy " }}</td>
+<td>{{ x.sifPlacanja }}</td>
+<td>{{ x.IznosFaktura | currency : ""}}</td>
+<td>{{ x.Rabat | currency : ""}}</td>
+<td>{{ x.IznosRobe | currency : ""}}</td>
+<td>{{ x.Porez | currency : ""}}</td>
+<td>{{ x.NazivKomint }}</td>
+<td>{{ x.Mesto }}</td>
+<td>{{ x.NazivPlacanja }}</td>
+<td>{{ x.StProsecanRuc | currency : ""}}</td>
+<td>{{ x.ProsecanRuc | currency : ""}}</td>
+</tr></tbody></table></div>
 <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/navbar.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
@@ -62,10 +62,9 @@
             $scope.names = response.data;
             console.log($scope.names)
         })
-        $scope.convertDate = function(x){
+$scope.convertDate = function(x){
             return new Date(x);
-        }
-    });
+        }    });
 </script>
 </body>
 </html>
