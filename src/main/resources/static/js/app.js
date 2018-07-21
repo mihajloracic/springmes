@@ -1,5 +1,5 @@
-var app = angular.module('myApp', []);
 
+var app = angular.module('myApp', ['AxelSoft']);
 app.run(function($rootScope) {
     $rootScope.color = 'blue';
     console.log($rootScope.color)
